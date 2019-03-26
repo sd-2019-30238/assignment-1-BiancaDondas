@@ -6,9 +6,9 @@ import Model.*;
 public class UserLogic {
 
 	public int adaugaClient(String nume, String surname, String email, String pass) {
-		int n=1;//succes
+		int n=1;
 		if( nume.equals("")|| surname.equals("")||email.equals("")) {
-			n=0;//campuri invalide
+			n=0;
 		} 
 		if(n==1) {
 			User u=new User(nume, surname, email,pass);

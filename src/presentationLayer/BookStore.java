@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextPane;
 
 import BusinessLogic.BookLogic;
+import DataAccess.BookAccess;
 
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -15,13 +16,18 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class BookStore {
 
 	private JFrame frame;
 	private JTextField txtFilterBy;
+	private JTextField textField;
+	private ArrayList<String> list=new ArrayList<String>();
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -51,18 +57,22 @@ public class BookStore {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 599, 443);
+		frame.setBounds(100, 100, 876, 443);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(127, 54, 26, 48);
-		frame.getContentPane().add(scrollBar);
-		
 		JTextPane textPane = new JTextPane();
 		textPane.setBackground(SystemColor.window);
-		textPane.setBounds(37, 54, 116, 155);
+		textPane.setBounds(15, 83, 205, 240);
 		frame.getContentPane().add(textPane);
+		textField = new JTextField();
+		textField.setBounds(395, 183, 146, 26);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setBounds(602, 86, 223, 227);
+		frame.getContentPane().add(textPane_1);
 		
 		txtFilterBy = new JTextField();
 		txtFilterBy.setText("Filter by");
@@ -87,28 +97,51 @@ public class BookStore {
 					
 			}
 		});
-		btnFilter.setBounds(432, 73, 115, 29);
+		btnFilter.setBounds(426, 64, 115, 29);
 		frame.getContentPane().add(btnFilter);
-		
-		JButton btnNewButton = new JButton("Go to reading list");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BookLogic b = new BookLogic();
-				//if(b.available(title))
-				ReadingList readingList = new ReadingList();
-				readingList.getFrame().setVisible(true);
-			}
-		});
-		btnNewButton.setBounds(295, 291, 240, 29);
-		frame.getContentPane().add(btnNewButton);
-		
+	
 		JButton btnAddToReading = new JButton("Add to reading list");
 		btnAddToReading.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BookLogic book = new BookLogic();
+				String title = textField.getText();
+				String username = textField_1.getText();
+				try {
+					book.available(username, title);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String result1 = book.show(username);
+				//for (String j: result1)
+					//System.out.println(j);
+				textPane_1.setText(textPane_1.getText()+"\n"+title);
 			}
 		});
-		btnAddToReading.setBounds(295, 246, 240, 29);
+		btnAddToReading.setBounds(288, 134, 240, 29);
 		frame.getContentPane().add(btnAddToReading);
+		
+		
+		JLabel lblReadingList = new JLabel("Reading List");
+		lblReadingList.setBounds(663, 41, 130, 29);
+		frame.getContentPane().add(lblReadingList);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(395, 249, 146, 26);
+		frame.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblTitleOfThe = new JLabel("title of the book");
+		lblTitleOfThe.setBounds(246, 186, 122, 20);
+		frame.getContentPane().add(lblTitleOfThe);
+		
+		JLabel lblYourUsername = new JLabel("your username");
+		lblYourUsername.setBounds(246, 252, 122, 20);
+		frame.getContentPane().add(lblYourUsername);
+		
+		JLabel lblBooks = new JLabel("Books");
+		lblBooks.setBounds(81, 45, 69, 20);
+		frame.getContentPane().add(lblBooks);
 	}
 
 	public JFrame getFrame() {
@@ -125,5 +158,13 @@ public class BookStore {
 
 	public void setTxtFilterBy(JTextField txtFilterBy) {
 		this.txtFilterBy = txtFilterBy;
+	}
+
+	public ArrayList<String> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<String> list) {
+		this.list = list;
 	}
 }

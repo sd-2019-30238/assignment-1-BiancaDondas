@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.mysql.jdbc.PreparedStatement;
 public class BookAccess {
 
 	private static Connection con = Conn.getConnection();
@@ -17,12 +19,38 @@ public class BookAccess {
 			ResultSet result=statement.executeQuery(query);
 			while(result.next()) {
 				System.out.println(result.getInt(1)+" "+result.getString(2)+" "+result.getString(3)+" "+result.getString(4)+" "+result.getString(5)+" "+result.getString(6));
-			}
-					
+				//return result.getString(2)+"\n";
+			}		
 		}catch(Exception e) {
 			
 			System.out.println("Conection failed!");
 		}	  
+	}
+	public String showBooks1(String username) {
+		try {
+			String query="Select * from books where title = '"+username+"';";
+			Statement statement=con.createStatement();
+			ResultSet result=statement.executeQuery(query);
+			while(result.next()) {
+				//System.out.println(result.getInt(1)+" "+result.getString(2)+" "+result.getString(3)+" "+result.getString(4)+" "+result.getString(5)+" "+result.getString(6));
+				return result.getString(2)+"\n";
+			}		
+		}catch(Exception e) {
+			
+			System.out.println("Conection failed!");
+		}
+		return username;	  
+	}
+	public void addBook(String username, String title) throws SQLException
+	{
+		java.sql.PreparedStatement statement=null;
+		String query="Insert into reading (username, title) values (?,?)";
+			statement=con.prepareStatement(query);
+			statement.setString(1,username);
+			statement.setString(2,title);
+			statement.executeUpdate();
+			//ArrayList<String> titles=new ArrayList<String>();
+			// titles.add(arg0)
 	}
 	public void filterByTitle(String title) {
 		try {
