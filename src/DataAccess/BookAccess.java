@@ -83,19 +83,19 @@ public class BookAccess {
 		return authors;
 	}
 	
-	public void filterByGenre(String genre) {
-		try {
-			String query="Select * from books where genre = '"+genre+"';";
-			Statement statement=con.createStatement();
-			ResultSet result=statement.executeQuery(query);
-			while(result.next()) {
-				System.out.println(result.getString(2)+" "+result.getString(3)+" "+result.getString(4)+" "+result.getString(5)+" "+result.getString(6));
-			}
-					
-		}catch(Exception e) {
-			
-			System.out.println("There are no books in that genre!");
-		}	  
+	public ArrayList<String> filterByGenre(String genre) throws SQLException {
+		String query = "Select * from books where genre='" + genre+ "'";
+		Statement statement=con.createStatement();
+		ResultSet result=statement.executeQuery(query);
+		ArrayList<String> genre1=new ArrayList<String>();
+		//ArrayList<String[]> authors=new ArrayList<String[]>();
+		Book b = new Book();
+		while(result.next()) {
+				String unu = result.getString(2)+" "+result.getString(3);
+				genre1.add(unu);
+		}
+		
+		return genre1;
 	}
 	
 	public boolean availabilty(String title)
@@ -113,4 +113,20 @@ public class BookAccess {
 		}	  
 		return false;
 	}
+	/*public ArrayList<String> addToWaitingList()
+	{
+		
+	}*/
+	public String verifyPayment(String email) throws SQLException
+	{
+		
+		String query="Select email from payments where email = '"+email+"';";
+		Statement statement1=con.createStatement();
+		ResultSet result=statement1.executeQuery(query);
+		result.next();
+		String payed = result.getString(1);
+		return payed;
+		
+	}
+	
 }

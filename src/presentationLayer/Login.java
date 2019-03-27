@@ -5,15 +5,18 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import javax.swing.JTextPane;
 
+import BusinessLogic.BookLogic;
 import BusinessLogic.UserLogic;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import DataAccess.*;
 import javax.swing.JTextField;
@@ -63,22 +66,33 @@ public class Login extends JFrame {
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				userAccess u = new userAccess();
+				BookLogic b = new BookLogic();
 				String email = textField.getText();
 				char[] p = passwordField.getPassword();
 				String pass = "";
 				for(char x : p) {
 					pass += x;
 				}
-				if(u.login(email, pass)==1)
-				{
-					
-					BookStore bs = new BookStore();
-					bs.getFrame().setVisible(true);
-				}
-				else if(u.login(email, pass)==2)
-				{
-					BookStaf bs = new BookStaf();
-					bs.getFrame().setVisible(true);
+				try {
+					if(u.login(email, pass)==1)
+					{
+						if(b.payment(email))
+						{
+						BookStore bs = new BookStore();
+						bs.getFrame().setVisible(true);
+						}
+						else 
+						{
+							JOptionPane.showMessageDialog(null, "Sorry, it seems you didn't pay your subscription");
+						}
+					}
+					else if(u.login(email, pass)==2)
+					{
+						BookStaf bs = new BookStaf();
+						bs.getFrame().setVisible(true);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 					
 					
@@ -120,4 +134,13 @@ public class Login extends JFrame {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
 }

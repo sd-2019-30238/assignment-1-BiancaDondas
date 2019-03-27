@@ -37,6 +37,15 @@ public class BookLogic {
 		}
 		return null;
 	}
+	
+	public boolean payment(String email) throws SQLException
+	{
+		if(b.verifyPayment(email).equals("Yes"))
+		{
+			return true;
+		}
+		return false;
+	}
 	/*public String add(String user, String title)
 	{
 		if(available(title).equals(null))

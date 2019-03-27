@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JComboBox;
 
 public class BookStaf extends JFrame{
 
@@ -52,5 +53,4 @@ public class BookStaf extends JFrame{
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
-
 }

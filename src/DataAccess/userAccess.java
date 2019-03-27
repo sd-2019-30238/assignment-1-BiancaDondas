@@ -19,12 +19,24 @@ public class userAccess {
 			System.out.println("Conection failed!");
 		}	  
 	}
-	
+	public void addPayment(String email,String method, String payed)
+	{
+		try {
+			java.sql.CallableStatement myStmt=userAccess.con.prepareCall("{call add_payment(?,?,?)}");
+			
+			myStmt.setString(1,email);
+			myStmt.setString(2,method);
+			myStmt.setString(3,payed);
+			myStmt.execute();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+	}
 	public void addUser(String firstName, String surname, String mail, String password)
 	{
 			try {
 				java.sql.CallableStatement myStmt=userAccess.con.prepareCall("{call add_user(?,?,?,?)}");
-				
 				myStmt.setString(1,firstName);
 				myStmt.setString(2,surname);
 				myStmt.setString(3,mail);
