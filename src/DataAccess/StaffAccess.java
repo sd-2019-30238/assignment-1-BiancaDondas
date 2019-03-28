@@ -7,58 +7,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.PreparedStatement;
-
 public class StaffAccess {
 
 	private static Connection con = Conn.getConnection();
 
-	/*public void addWaiting(String email, String payed) {
-		try {
-			java.sql.CallableStatement myStmt = userAccess.getCon().prepareCall("{call add_waiting(?,?)}");
-
-			myStmt.setString(1, email);
-			myStmt.setString(2, payed);
-			myStmt.executeUpdate();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
+	public ArrayList<String> showReturned() throws SQLException {
+		String query = "Select * from returnrequest";
+		Statement statement = con.createStatement();
+		ResultSet result = statement.executeQuery(query);
+		ArrayList<String> persons = new ArrayList<String>();
+		while (result.next()) {
+			String pers = result.getString(1) + " " + result.getString(2);
+			persons.add(pers);
 		}
-	}*/
-	
-	public ArrayList<String> showReturned() throws SQLException
-	{
-			String query="Select * from returnrequest";
-			Statement statement=con.createStatement();
-			ResultSet result=statement.executeQuery(query);
-			ArrayList<String> persons=new ArrayList<String>();
-			while(result.next()) {
-				String pers  = result.getString(1) + " " + result.getString(2);
-				persons.add(pers);
-			}		
 		return persons;
 	}
-	
-	public void modifyPayment(String email, String payed)
-	{
-		
+
+	public void modifyPayment(String email, String payed) {
+
 		try {
 			java.sql.CallableStatement myStmt = userAccess.getCon().prepareCall("{call verify_payment(?,?)}");
 
 			myStmt.setString(1, payed);
 			myStmt.setString(2, email);
-			myStmt.executeUpdate();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-	}
-
-	public void returnBook(String email, String title) {
-		try {
-			java.sql.CallableStatement myStmt = userAccess.getCon().prepareCall("{call add_return(?,?)}");
-			myStmt.setString(1, email);
-			myStmt.setString(2, title);	
 			myStmt.executeUpdate();
 		} catch (SQLException e) {
 
@@ -122,18 +93,18 @@ public class StaffAccess {
 	}
 
 	public ArrayList<String> getFromWaiting() throws SQLException {
-		
+
 		String query = "Select * from waitinglist limit 1";
-		Statement statement=con.createStatement();
-		ResultSet result=statement.executeQuery(query);
-		ArrayList<String> waitingPerson=new ArrayList<String>();
-		//ArrayList<String[]> authors=new ArrayList<String[]>();
+		Statement statement = con.createStatement();
+		ResultSet result = statement.executeQuery(query);
+		ArrayList<String> waitingPerson = new ArrayList<String>();
+		// ArrayList<String[]> authors=new ArrayList<String[]>();
 		Book b = new Book();
-		while(result.next()) {
-				String unu = result.getString(1);
-				String doi = result.getString(2);
-				waitingPerson.add(unu);
-				waitingPerson.add(doi);
+		while (result.next()) {
+			String unu = result.getString(1);
+			String doi = result.getString(2);
+			waitingPerson.add(unu);
+			waitingPerson.add(doi);
 		}
 		return waitingPerson;
 	}

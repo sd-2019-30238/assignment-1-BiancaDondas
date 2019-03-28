@@ -21,5 +21,6 @@ public class Main {
 		//s.deleteReading("bobo", "ssss");
 		//System.out.println(s.getFromWaiting().get(0));
 		//ss.verifyReturn("bobo", "ssss");
+		books.filterByTitle("ssss");
 	}
 }

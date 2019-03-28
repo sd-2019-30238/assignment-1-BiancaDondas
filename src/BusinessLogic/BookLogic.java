@@ -3,18 +3,39 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DataAccess.*;
-import Model.Book;
-import Model.User;
 
 public class BookLogic {
 
 	BookAccess b = new BookAccess();
-	//BookLogic book = new BookLogic();
 	public ArrayList<String> filterAuthor(String author)
 	{
 		
 		try {
 			ArrayList<String> result=b.filterByAuthor(author);
+			return result;
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null; 	
+	}
+	public ArrayList<String> filterGenre(String genre)
+	{
+		
+		try {
+			ArrayList<String> result=b.filterByGenre(genre);
+			return result;
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null; 	
+	}
+	public ArrayList<String> filterTitle(String title)
+	{
+		
+		try {
+			ArrayList<String> result=b.filterByTitle(title);
 			return result;
 				
 		} catch (SQLException e) {
@@ -29,7 +50,6 @@ public class BookLogic {
 	}
 	public String available(String username,String title) throws SQLException
 	{
-		//String result="";
 		boolean ok = b.availabilty(title);
 		if(ok==true) 
 		{
@@ -49,20 +69,16 @@ public class BookLogic {
 		}
 		else return false;
 	}
-	/*public String add(String user, String title)
+	public ArrayList<String> books()
 	{
-		if(available(title).equals(null))
-		{
-			System.out.println("Cartea nu e diponibila");
+		try {
+			ArrayList<String> result=b.showBooks();
+			return result;
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else {
-			try {
-				b.addBook(user, title);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return title;
-	}*/
+		return null; 	
+	}
 	
 }

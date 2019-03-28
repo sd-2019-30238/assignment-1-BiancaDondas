@@ -16,7 +16,7 @@ public class StaffLogic {
 	{
 
 		staff.deleteReading(email, title);
-		staff.returnBook(email, title);
+		//staff.returnBook(email, title);
 	}
 	public ArrayList<String> showReturnedBook() throws SQLException
 	{

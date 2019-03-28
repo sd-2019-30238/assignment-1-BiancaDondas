@@ -12,19 +12,17 @@ public class BookAccess {
 
 	private static Connection con = Conn.getConnection();
 	
-	public void showBooks() {
-		try {
+	public ArrayList<String> showBooks() throws SQLException {
+
 			String query="Select * from books";
 			Statement statement=con.createStatement();
 			ResultSet result=statement.executeQuery(query);
-			while(result.next()) {
-				System.out.println(result.getInt(1)+" "+result.getString(2)+" "+result.getString(3)+" "+result.getString(4)+" "+result.getString(5)+" "+result.getString(6));
-				//return result.getString(2)+"\n";
-			}		
-		}catch(Exception e) {
-			
-			System.out.println("Conection failed!");
-		}	  
+			ArrayList<String> bookss=new ArrayList<String>();	
+				while(result.next()) {
+						String unu = result.getString(2)+" "+result.getString(3);
+						bookss.add(unu);
+				}
+				return bookss;
 	}
 	public String showBooks1(String username) {
 		try {
@@ -49,16 +47,12 @@ public class BookAccess {
 			statement.setString(1,username);
 			statement.setString(2,title);
 			statement.executeUpdate();
-			//ArrayList<String> titles=new ArrayList<String>();
-			// titles.add(arg0)
 	}
 	public ArrayList<String> filterByTitle(String title) throws SQLException {
 		String query = "Select * from books where title='" + title+ "'";
 		Statement statement=con.createStatement();
 		ResultSet result=statement.executeQuery(query);
 		ArrayList<String> titles=new ArrayList<String>();
-		//ArrayList<String[]> authors=new ArrayList<String[]>();
-		Book b = new Book();
 		while(result.next()) {
 				String unu = result.getString(2)+" "+result.getString(3);
 				titles.add(unu);
@@ -73,8 +67,6 @@ public class BookAccess {
 		Statement statement=con.createStatement();
 		ResultSet result=statement.executeQuery(query);
 		ArrayList<String> authors=new ArrayList<String>();
-		//ArrayList<String[]> authors=new ArrayList<String[]>();
-		Book b = new Book();
 		while(result.next()) {
 				String unu = result.getString(2)+" "+result.getString(3);
 				authors.add(unu);
@@ -88,13 +80,11 @@ public class BookAccess {
 		Statement statement=con.createStatement();
 		ResultSet result=statement.executeQuery(query);
 		ArrayList<String> genre1=new ArrayList<String>();
-		//ArrayList<String[]> authors=new ArrayList<String[]>();
 		Book b = new Book();
 		while(result.next()) {
 				String unu = result.getString(2)+" "+result.getString(3);
 				genre1.add(unu);
 		}
-		
 		return genre1;
 	}
 	
@@ -135,7 +125,18 @@ public class BookAccess {
 		result.next();
 		String payed = result.getString(1);
 		return payed;
-		
 	}
-	
+	public void addReturn(String email, String title)
+	{
+		try {
+			java.sql.CallableStatement myStmt=userAccess.getCon().prepareCall("{call add_return(?,?)}");
+			
+			myStmt.setString(1,email);
+			myStmt.setString(2,title);
+			myStmt.execute();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+	}
 }

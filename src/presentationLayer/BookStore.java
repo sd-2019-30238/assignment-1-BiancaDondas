@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class BookStore {
 
@@ -72,6 +73,14 @@ public class BookStore {
 
 		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setBounds(602, 86, 223, 227);
+		BookLogic b = new BookLogic();
+		ArrayList<String> carti = b.books();
+		if (carti.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "There are no books");
+		} else {
+			for (String j : carti)
+				textPane.setText(textPane.getText() + "\n" + j);
+		}
 		frame.getContentPane().add(textPane_1);
 
 		txtFilterBy = new JTextField();
@@ -79,24 +88,58 @@ public class BookStore {
 		txtFilterBy.setBounds(235, 65, 146, 26);
 		frame.getContentPane().add(txtFilterBy);
 		txtFilterBy.setColumns(10);
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(419, 47, 109, 26);
+		comboBox.addItem("By title");
+		comboBox.addItem("By author");
+		comboBox.addItem("By genre");
+		comboBox.setSelectedItem(null);
+		frame.getContentPane().add(comboBox);
 
 		JButton btnFilter = new JButton("Filter");
 		btnFilter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BookLogic b = new BookLogic();
-				String author = txtFilterBy.getText();
-				ArrayList<String> result = b.filterAuthor(author);
-				if (result.isEmpty()) {
-					// System.out.println("e gol!");
-				} else {
-					for (String j : result)
-						// System.out.println(j);
-						textPane.setText(textPane.getText() + "\n" + j);
+				String filter = (String) comboBox.getSelectedItem();
+				if (filter.equals("By author")) {
+					textPane.setText(null);
+					String author = txtFilterBy.getText();
+					ArrayList<String> result = b.filterAuthor(author);
+					if (result.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "There are no books by that author");
+					} else {
+						for (String j : result)
+							textPane.setText(textPane.getText() + "\n" + j);
+					}
+				}
+				else if(filter.equals("By genre"))
+				{
+					textPane.setText(null);
+					String genre = txtFilterBy.getText();
+					ArrayList<String> result = b.filterGenre(genre);
+					if (result.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "There are no books in that genre");
+					} else {
+						for (String j : result)
+							textPane.setText(textPane.getText() + "\n" + j);
+					}
+				}
+				else if(filter.equals("By title"))
+				{
+					textPane.setText(null);
+					String title = txtFilterBy.getText();
+					ArrayList<String> result = b.filterTitle(title);
+					if (result.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "There are no books with that title");
+					} else {
+						for (String j : result)
+							textPane.setText(textPane.getText() + "\n" + j);
+					}
 				}
 
 			}
 		});
-		btnFilter.setBounds(426, 64, 115, 29);
+		btnFilter.setBounds(419, 89, 115, 29);
 		frame.getContentPane().add(btnFilter);
 
 		JButton btnAddToReading = new JButton("Add to reading list");
@@ -148,17 +191,20 @@ public class BookStore {
 		lblIfABook.setBounds(202, 351, 522, 20);
 		frame.getContentPane().add(lblIfABook);
 
-		JButton btnSeeWaitingList = new JButton("See waiting list");
+		JButton btnSeeWaitingList = new JButton("Go to waiting list");
 		btnSeeWaitingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				WaitingList wl = new WaitingList();
+				wl.getFrame().setVisible(true);
 			}
 		});
-		btnSeeWaitingList.setBounds(693, 347, 146, 29);
+		btnSeeWaitingList.setBounds(678, 347, 161, 29);
 		frame.getContentPane().add(btnSeeWaitingList);
 
 		JButton btnReturnBook = new JButton("Return book");
 		btnReturnBook.setBounds(35, 347, 136, 29);
 		frame.getContentPane().add(btnReturnBook);
+
 	}
 
 	public JFrame getFrame() {
