@@ -8,7 +8,7 @@ public class userAccess {
 	public void showUsers() {
 		try {
 			String query="Select * from users";
-			Statement statement=con.createStatement();
+			Statement statement=getCon().createStatement();
 			ResultSet result=statement.executeQuery(query);
 			while(result.next()) {
 				System.out.println(result.getString(1)+" "+result.getString(2)+" "+result.getString(3)+" "+result.getString(4));
@@ -22,7 +22,7 @@ public class userAccess {
 	public void addPayment(String email,String method, String payed)
 	{
 		try {
-			java.sql.CallableStatement myStmt=userAccess.con.prepareCall("{call add_payment(?,?,?)}");
+			java.sql.CallableStatement myStmt=userAccess.getCon().prepareCall("{call add_payment(?,?,?)}");
 			
 			myStmt.setString(1,email);
 			myStmt.setString(2,method);
@@ -36,7 +36,7 @@ public class userAccess {
 	public void addUser(String firstName, String surname, String mail, String password)
 	{
 			try {
-				java.sql.CallableStatement myStmt=userAccess.con.prepareCall("{call add_user(?,?,?,?)}");
+				java.sql.CallableStatement myStmt=userAccess.getCon().prepareCall("{call add_user(?,?,?,?)}");
 				myStmt.setString(1,firstName);
 				myStmt.setString(2,surname);
 				myStmt.setString(3,mail);
@@ -55,7 +55,7 @@ public class userAccess {
 			String query3 ="Select * from users where email='" +mail+"'";
 			String query1="Select * from users where parola= md5('"+pass+"');";
 			String query2="Select * from users where parola= md5('";
-			Statement statement=con.createStatement();
+			Statement statement=getCon().createStatement();
 			ResultSet result=statement.executeQuery(query);
 			ResultSet result1=statement.executeQuery(query3);
 			int startPos = query2.length();
@@ -90,6 +90,12 @@ public class userAccess {
 			System.out.println(e);
 		}
 		return 0;
+	}
+	public static Connection getCon() {
+		return con;
+	}
+	public static void setCon(Connection con) {
+		userAccess.con = con;
 	}
 	
 }

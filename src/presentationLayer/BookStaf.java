@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class BookStaf extends JFrame{
 
@@ -38,13 +43,37 @@ public class BookStaf extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 403, 394);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblAmAjunsAici = new JLabel("Am ajuns aici");
-		lblAmAjunsAici.setBounds(174, 83, 181, 32);
-		frame.getContentPane().add(lblAmAjunsAici);
+		JButton btnModifyPayment = new JButton("Modify payment");
+		btnModifyPayment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ModifyPayment modify = new ModifyPayment();
+				modify.getFrame().setVisible(true);
+				
+			}
+		});
+		btnModifyPayment.setBounds(96, 95, 174, 29);
+		frame.getContentPane().add(btnModifyPayment);
+		
+		JButton btnNewButton = new JButton("Return & Assign");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReturnBook rBook = null;
+				try {
+					rBook = new ReturnBook();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				rBook.getFrame().setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(96, 173, 174, 29);
+		frame.getContentPane().add(btnNewButton);
 	}
 	public JFrame getFrame() {
 		return frame;

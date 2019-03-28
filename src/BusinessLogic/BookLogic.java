@@ -35,6 +35,9 @@ public class BookLogic {
 		{
 			b.addBook(username, title);
 		}
+		else {
+			b.addToWaitingList(username, title);
+		}
 		return null;
 	}
 	
@@ -44,7 +47,7 @@ public class BookLogic {
 		{
 			return true;
 		}
-		return false;
+		else return false;
 	}
 	/*public String add(String user, String title)
 	{

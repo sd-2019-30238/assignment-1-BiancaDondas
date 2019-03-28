@@ -52,19 +52,19 @@ public class BookAccess {
 			//ArrayList<String> titles=new ArrayList<String>();
 			// titles.add(arg0)
 	}
-	public void filterByTitle(String title) {
-		try {
-			String query="Select * from books where title = '"+title+"';";
-			Statement statement=con.createStatement();
-			ResultSet result=statement.executeQuery(query);
-			while(result.next()) {
-				System.out.println(result.getString(2)+" "+result.getString(3)+" "+result.getString(4)+" "+result.getString(5)+" "+result.getString(6));
-			}
-					
-		}catch(Exception e) {
-			
-			System.out.println("There are no books with that title!");
-		}	  
+	public ArrayList<String> filterByTitle(String title) throws SQLException {
+		String query = "Select * from books where title='" + title+ "'";
+		Statement statement=con.createStatement();
+		ResultSet result=statement.executeQuery(query);
+		ArrayList<String> titles=new ArrayList<String>();
+		//ArrayList<String[]> authors=new ArrayList<String[]>();
+		Book b = new Book();
+		while(result.next()) {
+				String unu = result.getString(2)+" "+result.getString(3);
+				titles.add(unu);
+		}
+		
+		return titles;  
 	}
 
 	public ArrayList<String> filterByAuthor(String author) throws SQLException
@@ -113,14 +113,23 @@ public class BookAccess {
 		}	  
 		return false;
 	}
-	/*public ArrayList<String> addToWaitingList()
+	public void addToWaitingList(String email, String title)
 	{
-		
-	}*/
+		try {
+			java.sql.CallableStatement myStmt=userAccess.getCon().prepareCall("{call add_waiting(?,?)}");
+			
+			myStmt.setString(1,email);
+			myStmt.setString(2,title);
+			myStmt.execute();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+	}
 	public String verifyPayment(String email) throws SQLException
 	{
 		
-		String query="Select email from payments where email = '"+email+"';";
+		String query="Select payed from payments where email = '"+email+"';";
 		Statement statement1=con.createStatement();
 		ResultSet result=statement1.executeQuery(query);
 		result.next();
