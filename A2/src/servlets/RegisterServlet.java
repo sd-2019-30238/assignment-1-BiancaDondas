@@ -40,23 +40,27 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name  = request.getParameter("username");
-		String surname =  request.getParameter("password");
-		String email = request.getParameter("password1");
-		String parola = request.getParameter("payment_plan");
-		String title  = "staff";
+		String name  = request.getParameter("first");
+		String surname =  request.getParameter("last");
+		String email = request.getParameter("username");
+		String parola = request.getParameter("password");
+		String parola1 = request.getParameter("password1");
+		String payment = request.getParameter("payment");
+		String title  = "user";
 		//System.out.println(name + surname + test1 + test2 + test3);
 		
 		if(!name.equals(null))
-			try {
-				user.insertUser(name, surname, email, parola, title);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			if(parola1.equals(parola1))
+				try {
+					user.insertUser(name, surname, email, parola, title);
+					user.addPayment(email, payment);
+					  RequestDispatcher view = request.getRequestDispatcher("/login.jsp");
+					  view.forward(request, response);
+					
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				}
+			
 //		UserDAO user = new UserDAO();
 //		 try {
 //				user.insertUser(name,surname,test1,test2, test3);

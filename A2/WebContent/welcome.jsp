@@ -67,11 +67,14 @@ ResultSet resultSet = null;
  <style>
   table {
    border-collapse: collapse;
-   width: 80%;
+   width: 60%;
    color: #588c7e;
    font-family: monospace;
    font-size: 20px;
    text-align: center;
+    overflow-y:scroll;
+   height:280px;
+   display:block;
      } 
   th {
    background-color: #588c7e;
@@ -109,7 +112,7 @@ String sql ="select * from books";
 resultSet = statement.executeQuery(sql);
 while(resultSet.next()){
 %>
-<tr>
+<tr onclick="myFunction(this)">
 <td><%=resultSet.getString("title") %></td>
 <td><%=resultSet.getString("author") %></td>
 <td><%=resultSet.getString("genre") %></td>
@@ -148,6 +151,25 @@ function myFunction() {
     }
 }
 
-</script>     
+</script> 
+<script>
+ var table = document.getElementById('myTable');
+ for(var i = 1; i < table.rows.length; i++)
+ {
+ table.rows[i].onclick = function()
+ {
+ 	document.getElementById("bookTitle").value = this.cells[0].innerHTML;
+  };
+}
+</script>
+ <script>
+ var x= document.getElementById("bookTitle").value;
+ </script>
+ <form method = "get" action="BookServlet"> 
+ 	Book Title:<input type="text" name="bookTitle" id="bookTitle"><br><br>
+  	Username:<input type="text" name="username" id="example" >
+  <input type="submit" value="Add to reading list">
+  <br><br>
+</form>
 </body>
 </html>

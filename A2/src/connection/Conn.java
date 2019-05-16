@@ -13,7 +13,7 @@ public class Conn {
 		try {
 			if(con==null) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con=DriverManager.getConnection("jdbc:mysql:/sd1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","paroladb");
+				con=DriverManager.getConnection("jdbc:mysql:/sd1?&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","paroladb");
 			}
 			
 		}catch(Exception e) {

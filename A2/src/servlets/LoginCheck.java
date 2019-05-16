@@ -63,10 +63,41 @@ public class LoginCheck extends HttpServlet {
 //		RequestDispatcher view = request.getRequestDispatcher(forward);
 //		view.forward(request, response);
 		
+		
+		
+		
+//		String forward = "";
+//		
+//			//	int result = 2;
+//				boolean result = false;
+//					
+//					try {
+//						result = user.searchUser(
+//						         request.getParameter("username"),
+//						         request.getParameter("password"));
+//					} catch (ClassNotFoundException | SQLException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				
+//		         if (result == true) {
+//		             forward = "/welcome.jsp";}
+////		         } else if(result == 0)
+////		         {
+////		        	 forward = "/staff.jsp";
+////		         }
+//		         else 
+//		         {
+//		             forward = "/about.jsp";
+//		         }
+//		
+//		         RequestDispatcher view = request.getRequestDispatcher(forward);
+//		         view.forward(request, response);
+		
+		
 		String forward = "";
 		
-				boolean result=false;
-				
+				int result = 2;
 					
 					try {
 						result = user.searchUser(
@@ -77,14 +108,23 @@ public class LoginCheck extends HttpServlet {
 						e.printStackTrace();
 					}
 				
-		         if (result == true) {
+		         if (result == 1) {
 		             forward = "/welcome.jsp";
-		         } else {
+		         } else if(result == 0)
+		         {
+		        	 forward = "/staff.jsp";
+		         }
+		         else 
+		         {
 		             forward = "/about.jsp";
 		         }
 		
 		         RequestDispatcher view = request.getRequestDispatcher(forward);
 		         view.forward(request, response);
+		         
+		        
+		
 	}
 
+	
 }
