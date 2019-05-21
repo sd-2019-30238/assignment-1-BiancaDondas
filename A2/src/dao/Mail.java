@@ -27,7 +27,7 @@ public class Mail implements Observer {
       //String to = "biancadondas21@gmail.com";
       String from = "biancadondas21@gmail.com";
       //String host = "127.0.0.1";            
-      String password = "Bleckyblanca12";
+      String password = "Parola";
       
       Session sesion = Session.getInstance(properties, new Authenticator() {
     	  @Override
