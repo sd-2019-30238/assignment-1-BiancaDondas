@@ -2,7 +2,8 @@ package model;
 
 import java.util.Observable;
 import java.util.Observer;
-import Test.Mail;
+
+import dao.Mail;
 
 public class User {
 	private String firstName, surname, email, password;

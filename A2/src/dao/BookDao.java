@@ -10,15 +10,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import Test.Mail;
-
 import java.sql.Statement;
 import connection.Conn;
 import model.Book;
 import model.User;
 
-public class BookDao implements Observer {
+public class BookDao {
+//implements Observer {
 
 	StaffDao b = new StaffDao();
 	private static Connection con = Conn.getConnection();
@@ -33,9 +31,10 @@ public class BookDao implements Observer {
 			String unu = result.getString(2) + " - " + result.getString(3);
 			bookss.add(unu);
 			// b.addObserver(bookss);
+		
 
 		}
-		b.addObserver(this);
+	
 		return bookss;
 	}
 
@@ -126,18 +125,18 @@ public class BookDao implements Observer {
 		return payed;
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-
-		System.out.println(this.toString() + "is notified successfully about the availability of " + o.toString());
-		try {
-			Mail.SendMail("biancadondas21@gmail.com");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//	@Override
+//	public void update(Observable o, Object arg) {
+//
+//		System.out.println(this.toString() + "is notified successfully about the availability of " + o.toString());
+//		try {
+//			Mail.SendMail("biancadondas21@gmail.com");
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
 	//
 
 	// public void addReturn(String email, String title)

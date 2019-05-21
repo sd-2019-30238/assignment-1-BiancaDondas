@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class StaffDao extends Observable {
+public class StaffDao  {
 
 	private static Connection con = Conn.getConnection();
 
@@ -97,12 +97,15 @@ public class StaffDao extends Observable {
 		}
 	}
 
-	public void addReadingList(String email, String title) {
+	public void addReadingList(String email, String title) throws Exception {
+		//Mail email1 = new Mail();
+	
 		try {
 			java.sql.CallableStatement myStmt = UserDAO.getCon().prepareCall("{call add_reading(?,?)}");
 			myStmt.setString(1, email);
 			myStmt.setString(2, title);
 			myStmt.executeUpdate();
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -135,11 +138,12 @@ public class StaffDao extends Observable {
 		return waitingPerson;
 	}
 
-	public void forObs(String email, String title) {
+	public void forObs(String email, String title) throws Exception {
 		// StaffDao s = new StaffDao();
 		deleteWaiting(email, title);
 		addReadingList(email, title);
-		notifyObservers(email);
+		//Mail.SendMail(email);
+		//notifyObservers(email);
 //		this.setChanged();
 //		this.notifyObservers();
 	}
@@ -152,23 +156,23 @@ public class StaffDao extends Observable {
 		StaffDao.con = con;
 	}
 
-	@Override
-	public synchronized void addObserver(Observer o) {
-		System.out.println("Subscribing " + o.toString() + " for notification of " + this.toString());
-		super.addObserver(o);
-	}
-
-	@Override
-	public synchronized void deleteObserver(Observer o) {
-		System.out.println("Un-subscribing " + o.toString() + " from notification of " + this.toString());
-		super.deleteObserver(o);
-	}
-
-	@Override
-	public void notifyObservers() {
-		System.out.println("Notifying observers for availability of " + this.toString());
-		super.notifyObservers();
-		this.deleteObservers();
-	}
+//	@Override
+//	public synchronized void addObserver(Observer o) {
+//		System.out.println("Subscribing " + o.toString() + " for notification of " + this.toString());
+//		super.addObserver(o);
+//	}
+//
+//	@Override
+//	public synchronized void deleteObserver(Observer o) {
+//		System.out.println("Un-subscribing " + o.toString() + " from notification of " + this.toString());
+//		super.deleteObserver(o);
+//	}
+//
+//	@Override
+//	public void notifyObservers() {
+//		System.out.println("Notifying observers for availability of " + this.toString());
+//		super.notifyObservers();
+//		this.deleteObservers();
+//	}
 
 }

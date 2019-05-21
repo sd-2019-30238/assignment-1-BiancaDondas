@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import Test.Mail;
 import connection.Conn;
 import model.User;
 
@@ -39,7 +38,7 @@ public class ObserverDAO {
 				String userId = result.getString(1);
 				// TODO
 				 String user = userDAO.getUserById(userId);
-				 Mail.SendMail("biancadondas21@gmail.com");
+				// Mail.SendMail("biancadondas21@gmail.com");
 			
 			}
 		} catch (Exception e) {

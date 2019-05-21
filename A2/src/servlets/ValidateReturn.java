@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.AppObserver;
 import dao.StaffDao;
 
 /**
@@ -45,7 +46,14 @@ public class ValidateReturn extends HttpServlet{
 		String title = request.getParameter("title");
 		StaffDao s = new StaffDao();
 		String next = null;
+		String m = "";
 		s.deleteReturn(email, title); 
+		try {
+			m = s.searchWaiting(title);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			next = s.searchWaiting(title);
 		} catch (SQLException e) {
@@ -53,7 +61,14 @@ public class ValidateReturn extends HttpServlet{
 		}
 		if(!next.equals(null))
 			{
-				s.forObs(email, title);
+				try {
+					s.forObs(m, title);
+					//System.out.println(m);
+					AppObserver.availabilityObserver.sendMail(m);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 //				s.deleteWaiting(email, title);
 //				s.addReadingList(email, title);
 //				this.setChanged();

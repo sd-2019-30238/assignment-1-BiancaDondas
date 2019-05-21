@@ -3,7 +3,7 @@ package model;
 import java.util.Observable;
 import java.util.Observer;
 
-import Test.Mail;
+import dao.Mail;
 
 public class Staff {
 	private int idStaff;
