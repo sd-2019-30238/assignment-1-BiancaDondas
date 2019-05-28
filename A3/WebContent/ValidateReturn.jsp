@@ -7,7 +7,7 @@
 <title>Validate Return Book</title>
 </head>
 <body>
-<form action="ValidateReturn" method="post">
+<form action="validateReturn" method="post">
 		<b>User:</b> <input type="text" name="email"><br>
 		<b>Book:</b> <input type="text" name="title"><br>
 		<input type="submit" value="Validate">

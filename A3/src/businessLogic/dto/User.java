@@ -1,7 +1,7 @@
 package businessLogic.dto;
 
 public class User {
-	private String firstName, surname, email, password, type;
+	private String firstName, surname, email, password, tip;
 
 	
 	public User(String firstName, String surname, String email, String password, String type) {
@@ -9,17 +9,18 @@ public class User {
 		this.surname = surname;
 		this.email = email;
 		this.password = password;
-		this.type = type;
-	}
-	public User() {
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
+		this.tip = type;
 	}
 	
+	public User() {
+	}
+
+	public String getTip() {
+		return tip;
+	}
+	public void setTip(String tip) {
+		this.tip = tip;
+	}
 	public User(String firstName) {
 		this.firstName = firstName;
 	}
